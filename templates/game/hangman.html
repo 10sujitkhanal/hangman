@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hangman-card">
+    <div class="hangman-left-panel">
+        <h2 class="game-title">HANGMAN GAME</h2>
+        <img src="{% static 'game/images/hangman_' %}{{ guesses_left_image_idx }}.png" alt="Hangman Progress" class="hangman-figure" style="height:300px">
+    </div>
+
+    <div class="hangman-right-panel">
+        <div class="word-display-container">
+            <p class="word-display">{{ display_word }}</p>
+            {% if game_over and not win %}
+                <p class="reveal-word">The word was: <span class="revealed-word-text">{{ word }}</span></p>
+            {% endif %}
+        </div>
+        
+        <div class="hint-section">
+            {% if game_over %}
+                {% if win %}
+                    <p class="game-message win-message">{{ message }}</p>
+                {% else %}
+                    <p class="game-message lose-message">{{ message }}</p>
+                {% endif %}
+            {% else %}
+                <p class="game-message">
+                    {{ message }} <br /><br />
+                    <small>Guess Word is</small> {{word_suggestions | upper}} <small>Name</small>
+                </p>
+            {% endif %}
+            <p class="incorrect-guesses">Incorrect guesses: <span class="current-incorrect">{{ incorrect_guesses_count }}</span> / {{ max_guesses }}</p>
+        </div>
+
+        <div class="alphabet-buttons-grid">
+            {% for letter in alphabet %}
+                {% if game_over %}
+                    <button class="alphabet-button" disabled>{{ letter }}</button>
+                {% else %}
+                    <form method="post" action="{% url 'hangman_game' %}" class="guess-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="guess" value="{{ letter }}">
+                        <button type="submit" 
+                                class="alphabet-button {% if letter in guessed_letters %}guessed{% endif %}"
+                                {% if letter in guessed_letters %}disabled{% endif %}>
+                            {{ letter }}
+                        </button>
+                    </form>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="action-buttons">
+            {% if game_over %}
+            <a href="{% url 'reset_game' %}" class="play-again-button">Play Next</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

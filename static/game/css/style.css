@@ -1,0 +1,247 @@
+/* game/static/game/css/style.css */
+
+/* General body and wrapper styling */
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; /* Use the Google Font */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    background-color: #5B42F3; /* Background color from the design image */
+}
+
+.background-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Padding around the main card */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+/* Main game card styling */
+.hangman-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    display: flex;
+    flex-wrap: wrap; /* Allows panels to wrap on smaller screens */
+    max-width: 900px; /* Max width of the card */
+    width: 100%;
+    overflow: hidden; /* Ensures rounded corners are respected */
+    min-height: 500px; /* Minimum height to prevent collapse */
+}
+
+/* Panel styling */
+.hangman-left-panel,
+.hangman-right-panel {
+    padding-top: 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.hangman-left-panel {
+    flex: 1; /* Takes one part of available space */
+    min-width: 300px; /* Ensures it's not too narrow */
+    border-right: 1px solid #eee; /* Separator line like in the image */
+}
+
+.game-title {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.hangman-figure {
+    width: 250px; /* Fixed width for the hangman image */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; /* Ensure it fits within its container */
+    display: block; /* Removes extra space below image */
+    margin: 0 auto; /* Center image horizontally */
+}
+
+.hangman-right-panel {
+    flex: 2; /* Takes two parts of available space, wider than left */
+    min-width: 400px; /* Ensures it's not too narrow */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distributes content vertically */
+}
+
+/* Word display styling */
+.word-display-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.word-display {
+    font-family: monospace; /* Monospace font for consistent letter/underscore width */
+    font-size: 3em;
+    letter-spacing: 15px; /* Spacing between letters/underscores */
+    margin: 0;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.reveal-word {
+    font-size: 1.2em;
+    color: #666;
+    margin-top: 10px;
+}
+
+.revealed-word-text {
+    font-weight: bold;
+    color: #4CAF50; /* Green color for revealed word (on loss) */
+}
+
+/* Hint and message section styling */
+.hint-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.game-message {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.win-message {
+    color: #28a745; /* Green for win messages */
+}
+
+.lose-message {
+    color: #dc3545; /* Red for lose messages */
+}
+
+.incorrect-guesses {
+    font-size: 1.1em;
+    color: #666;
+}
+
+.current-incorrect {
+    font-weight: bold;
+    color: #dc3545; /* Red for the incorrect guess count */
+}
+
+/* Alphabet buttons grid styling */
+.alphabet-buttons-grid {
+    display: grid;
+    /* Flexible grid: columns adjust to fit, min 40px wide, max 1fr of available space */
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); 
+    gap: 10px; /* Spacing between buttons */
+    margin-bottom: 30px;
+    max-width: 450px; /* Max width of the button grid */
+    margin-left: auto;
+    margin-right: auto; /* Center the grid */
+}
+
+.guess-form {
+    display: contents; /* Ensures the button itself is the grid item */
+}
+
+.alphabet-button {
+    width: 100%; /* Full width within its grid cell */
+    padding: 15px 0; /* Vertical padding */
+    background-color: #007bff; /* Primary blue button color from design */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease; /* Smooth transitions */
+    text-transform: uppercase;
+}
+
+.alphabet-button:hover:not(:disabled) {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Styling for disabled or already guessed buttons */
+.alphabet-button:disabled,
+.alphabet-button.guessed {
+    background-color: #6c757d; /* Grey color */
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Action buttons (e.g., Play Again) styling */
+.action-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.play-again-button {
+    display: inline-block; /* Allows padding and sizing */
+    padding: 12px 25px;
+    background-color: #28a745; /* Green color for play again button */
+    color: white;
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.play-again-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .hangman-card {
+        flex-direction: column; /* Stack panels vertically on smaller screens */
+        min-height: auto; /* Remove min-height when stacked */
+    }
+
+    .hangman-left-panel {
+        border-right: none; /* Remove vertical border */
+        border-bottom: 1px solid #eee; /* Add horizontal border */
+        padding-bottom: 20px; /* Add some space below the image */
+    }
+
+    .hangman-right-panel {
+        padding-top: 20px; /* Add some space above the word display */
+    }
+
+    .word-display {
+        font-size: 2.5em;
+        letter-spacing: 10px;
+    }
+
+    .alphabet-buttons-grid {
+        grid-template-columns: repeat(auto-fit, minmax(35px, 1fr)); /* Slightly smaller buttons */
+        gap: 8px;
+    }
+
+    .alphabet-button {
+        padding: 12px 0;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 1.7em;
+    }
+
+    .hangman-figure {
+        width: 300px; /* Even smaller hangman figure */
+    }
+
+    .word-display {
+        font-size: 2em;
+        letter-spacing: 8px;
+    }
+    
+    .alphabet-buttons-grid {
+        grid-template-columns: repeat(auto-fit, minmax(30px, 1fr)); /* Further reduce button size */
+    }
+}
